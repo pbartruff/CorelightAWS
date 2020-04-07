@@ -1,0 +1,117 @@
+###############################################
+# Project Variables
+################################################
+variable "access_key" {
+  # Add your Access Key here
+  default = ""
+}
+
+variable "secret_key" {
+  # Add your secret Key here
+  default = ""
+}
+
+variable "public_key_path" {
+  description = "public key"
+  # Add the file location here ie., "C:\\Users\\name\\.ssh\\mykey.pub"
+  default = ""
+}
+
+variable "key_name" {
+  description = "private key"
+  # Add the name of the private key that aws will associate with the deployed ec2 instances
+  default = ""
+}
+
+variable "project" {
+  description = "Name for this project build-out"
+  default = ""
+}
+
+################################################
+# VPC Variables
+################################################
+variable "vpc_cidr" {
+  description = "VPC CIDR address. Ex: 10.0.0.0/16"
+  default = ""
+}
+
+variable "pub1_cidr" {
+  description = "Public Subnet Address CIDR"
+  default = ""
+}
+
+variable "priv1_cidr" {
+  description = "Private Subnet Address CIDR"
+  default = ""
+}
+
+################################################
+# Corlight Variables
+################################################
+variable "customer_id" {
+  description = "Corelight Customer ID for SEED keying"
+  default = ""
+}
+
+################################################
+# S3 Variables are for Reference.  They need to
+# be created manually before use.  
+# uuidgen is used on linux to create bucket
+# names
+################################################
+variable "s3_data" {
+  description = "S3 Bucket to hold data and config files"
+  default = ""
+}
+
+variable "s3_logs" {
+  description = "S3 Bucket to hold logs" 
+  default = ""
+}
+
+variable "s3_objects" {
+  description = "S3 Bucket to hold Extracted Objects" 
+  default = ""
+}
+
+################################################
+# AMI's
+################################################
+variable "aws_region" {
+  description = "AWS region to launch servers."
+  default     = "us-east-1"
+}
+
+variable "aws_az1" {
+        description = "AWS Availability Zone 1"
+        default         = "us-east-1a"
+}
+
+variable "aws_az2" {
+        description = "AWS Availability Zone 2"
+        default         = "us-east-1b"
+}
+
+variable "aws_az3" {
+        description = "AWS Availability Zone 3"
+        default         = "us-east-1c"
+}
+
+variable "aws_az4" {
+        description = "AWS Availability Zone 4"
+        default         = "us-east-1d"
+}
+
+# Amazon Linux V2 AMI
+variable "aws_amiv2" {
+        default = {
+                us-east-1 = "ami-0b69ea66ff7391e80"
+        }
+}
+
+# Corelight EC2 Sensors are supported in us-east-1, us-east-2, us-west-1, us-west-2, eu-west-1, eu-west-2.
+variable "v18" {
+  default = ""
+}
+
