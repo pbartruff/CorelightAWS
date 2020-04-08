@@ -1,5 +1,6 @@
 # CorelightAWS
 ![Architecture](images/architecture.png)
+
 Set of Terraform and Ansible scripts to deploy a simple Corelight lab environment with Splunk as the log search system.  Although Elastic was going to be part of this, it was easier to leave it out as elastic maintains a very well developed set of ansible scripts to deploy elastic in many of the possible configurations one might need.
 
 # Terraform scripts
@@ -17,6 +18,9 @@ Ansible has some configuration quirks when working with AWS.  Since it is using 
 Since we are using the Private subnet, our ansible.cfg file also needs to use Private IP addresses so that change has been made already.  I am leaving ec2.ini and ec2.py in this repo for convenience, but one may need to check with ansible to see if they are the most recent versions.
 
 Finally, only two roles are deployed Splunk and Fleet.  All the rest of the configuration shall be done manually.
+
+# Corelight Fleet
+The Ansible script for Fleet will need a few items placed in the "files" folder for the fleed role.  This will be the pem file, fleet rpm, and the signer key.  This comes when a customer is issued the fleet software package.
 
 # YMMV
 :-)
