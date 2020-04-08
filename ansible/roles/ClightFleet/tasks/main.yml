@@ -1,0 +1,96 @@
+---
+#Make RPM file a variable
+- name: Install Python 3
+  yum:
+    name: python3
+    state: present
+
+- name: Install requests library
+  pip:
+    name: requests
+    state: present
+    executable: pip3
+
+- name: Update all packages
+  yum:
+    disable_gpg_check: yes
+    name: '*'
+    state: latest
+
+- name: Upload Corelight license
+  copy:
+    src: ../files/22.corelight.fleet.pem
+    dest: /etc/corelight-fleetd.pem
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Upload Corelight Signing key 
+  copy:
+    src: ../files/GPG-KEY-CORELIGHT-FLEET-PACKAGE-SIGNER
+    dest: /root/
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Upload Corelight RPM
+  copy:
+    src: ../files/corelight-fleet-17.0.0-10696.x86_64.rpm
+    dest: /root/
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Add Corelight Key to RPM DB
+  rpm_key:
+    state: present
+    key: /root/GPG-KEY-CORELIGHT-FLEET-PACKAGE-SIGNER
+
+- name: Install Corelight Fleet Software
+  yum:
+    name: /root/corelight-fleet-17.0.0-10696.x86_64.rpm
+    state: present
+
+- name: Ensure key is not world readable and owned by corelight-fleetd
+  file:
+    path: /etc/corelight-fleetd.pem
+    owner: corelight-fleetd
+    group: corelight-fleetd
+    mode: '0600'
+
+- name: Upload corelight-fleetd.conf
+  copy:
+    src: ../files/corelight-fleetd.conf
+    dest: /etc/
+    owner: root
+    group: root
+    mode: '0644'
+    force: yes
+
+- name: Ensure Fleet runs at boot
+  systemd:
+    name: corelight-fleetd
+    state: started
+    masked: no
+
+- name: Run Script to Create admin user
+  script: ../files/passwrd.sh "mynewpassword"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    

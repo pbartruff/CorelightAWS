@@ -1,0 +1,32 @@
+---
+- name: Update all Packages
+  yum:
+    disable_gpg_check: yes
+    name: '*'
+    state: latest
+
+- name: Fetch Splunk RPM
+  get_url:
+    #url: 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.3.0&product=splunk&filename=splunk-7.3.0-657388c7a488-linux-2.6-x86_64.rpm&wget=true' 
+    url: 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=8.0.2.1&product=splunk&filename=splunk-8.0.2.1-f002026bad55-linux-2.6-x86_64.rpm&wget=true'
+    #dest: /root/splunk-7.3.0-657388c7a488-linux-2.6-x86_64.rpm
+    dest: /root/splunk-8.0.2.1-f002026bad55-linux-2.6-x86_64.rpm
+- name: Install Splunk RPM
+  yum:
+    disable_gpg_check: yes
+    name: /root/splunk-8.0.2.1-f002026bad55-linux-2.6-x86_64.rpm
+    state: present
+
+- name: Move user file to system
+  copy:
+    src: ../files/user-seed.conf
+    dest: /opt/splunk/etc/system/local/
+    owner: splunk
+    group: splunk
+    mode: '0644'
+
+- name: Start splunk as the splunk user
+  command: /opt/splunk/bin/splunk start --accept-license --answer-yes
+  become: true
+  become_user: splunk
+

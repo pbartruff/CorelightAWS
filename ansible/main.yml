@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: true
+  roles:
+
+- hosts: "tag_Name_fleet"
+  remote_user: ec2-user
+  become: true
+  become_user: root
+  become_method: sudo
+  roles:
+  - ClightFleet
+
+- hosts: "tag_Name_splunk"
+  remote_user: ec2-user
+  become: true
+  become_user: root
+  become_method: sudo
+  roles:
+  - splunk
